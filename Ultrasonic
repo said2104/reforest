@@ -1,0 +1,26 @@
+#include <Ultrasonic.h>
+#include "Servo.h"
+
+#define pino_trigger 10
+#define pino_echo 9
+#define PinRele_A 6
+#define PinEwlw_B 7
+
+Servo servo;
+Ultrasonic ultrasonic(pino_trigger, pino_echo);
+
+Void setup(){
+  servo.attach(2);
+  pinMode(PinRele_A, OUTPUT);
+  pinMode(PinRele_B, OUTPUT);
+}
+
+void loop(){
+  float cmMsec;
+  long microsec = ultrasonic.timing();
+  cmMsec = ultrasonic.convert(microsec, Ultrasonic: :CM);
+  if (cmMsec >= 30)
+    servo.Write(180);
+  else if (cmMsec <= 30)
+    servo.Write(90);
+}
